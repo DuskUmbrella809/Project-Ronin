@@ -180,10 +180,76 @@ do
     
 
         6)
+           clear
+
+            echo "══════════════════════════════════════"
+            echo "          ☀️ RONIN WEATHER"
+            echo "══════════════════════════════════════"
             echo
-            echo "Weather module coming soon."
+
+            # Detect current location
+            DISPLAY_CITY=$(curl -s ipinfo.io/city)
+            CITY=$(echo "$DISPLAY_CITY" | sed 's/ /+/g')
+            REGION=$(curl -s ipinfo.io/region)
+
+            echo "📍 $DISPLAY_CITY, $REGION"
+            echo
+
+            # Fetch weather data
+            WEATHER=$(curl -s "wttr.in/${CITY}?format=%t|%f|%h|%w|%C|%u")
+
+         if [ -z "$WEATHER" ]; then
+            echo "❌ Unable to retrieve weather data."
+            echo
             pause
-            ;;
+         fi
+
+         TEMP=$(echo "$WEATHER" | cut -d'|' -f1)
+         FEELS=$(echo "$WEATHER" | cut -d'|' -f2)
+         HUMIDITY=$(echo "$WEATHER" | cut -d'|' -f3)
+         WIND=$(echo "$WEATHER" | cut -d'|' -f4)
+         CONDITION=$(echo "$WEATHER" | cut -d'|' -f5)
+         UV=$(echo "$WEATHER" | cut -d'|' -f6 | tr -d '%')
+
+         printf "🌡️  Temperature : %s\n" "$TEMP"
+         printf "🥵 Feels Like  : %s\n" "$FEELS"
+         printf "☁️  Conditions : %s\n" "$CONDITION"
+         printf "💧 Humidity    : %s\n" "$HUMIDITY"
+         printf "💨 Wind        : %s\n" "$WIND"
+         printf "☀️  UV Index    : %s\n" "$UV"
+
+        echo
+
+        # UV Recommendation
+       if [[ "$UV" =~ ^[0-9]+$ ]]; then
+        if (( UV >= 11 )); then
+            echo "🟣 UV Level: Extreme"
+            echo "🧴 Avoid prolonged sun exposure."
+        elif (( UV >= 8 )); then
+            echo "🔴 UV Level: Very High"
+            echo "🧴 Wear sunscreen and sunglasses."
+        elif (( UV >= 6 )); then
+            echo "🟠 UV Level: High"
+            echo "😎 Sun protection is recommended."
+        elif (( UV >= 3 )); then
+            echo "🟡 UV Level: Moderate"
+            echo "🌤️ Consider sunscreen if outside."
+        else
+            echo "🟢 UV Level: Low"
+            echo "👍 Minimal sun protection needed."
+        fi
+        fi
+
+         echo
+         echo "══════════════════════════════════════"
+         echo
+
+         pause
+         ;;
+            
+            
+            
+            
 
         7)
             clear

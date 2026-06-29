@@ -141,7 +141,8 @@ do
 
         3)
             echo
-            echo "AI module coming soon."
+            echo "🤖Launching Open WebUI..."
+            xdg-open "http://localhost:8080" >/dev/null 2>&1
             pause
             ;;
 

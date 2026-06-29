@@ -147,8 +147,12 @@ do
             ;;
 
         4)
+            clear
             echo
-            echo "Docker module coming soon."
+            echo "🐳 Running Containers..."
+            echo "------------------------"
+            docker ps --format "table {{.Names}}\t{{.Status}}"
+            echo
             pause
             ;;
 

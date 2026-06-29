@@ -1,0 +1,25 @@
+#!/bin/bash
+
+clear
+
+echo "══════════════════════════════════════"
+echo "        🚀 PROJECT RONIN SHIP"
+echo "══════════════════════════════════════"
+echo
+
+read -p "📝 Commit message: " MESSAGE
+
+echo
+echo "📦 Staging files..."
+git add .
+
+echo
+echo "💾 Creating commit..."
+git commit -m "$MESSAGE"
+
+echo
+echo "☁️ Pushing to GitHub..."
+git push
+
+echo
+echo "✅ Ship complete!"

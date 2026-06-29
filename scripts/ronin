@@ -186,10 +186,37 @@ do
             ;;
 
         7)
+            clear
+
+            echo "══════════════════════════════════════"
+            echo "         📚 RONIN ACADEMY"
+            echo "══════════════════════════════════════"
             echo
-            echo "Cheat Sheet module coming soon."
-            pause
-            ;;
+            echo "💡 Command of the Day"
+            echo
+            echo "Command:"
+            echo "grep"
+            echo
+            echo "Description:"
+            echo "Search text for words or patterns."
+            echo
+            echo "Example:"
+            echo 'grep "error" logfile.txt'
+            echo
+            echo "Today's Challenge:"
+            echo "Find every .conf file in /etc"
+            echo "that contains the word \"listen\"."
+            echo
+            echo "Hint:"
+            echo 'grep -R "listen" /etc'
+            echo
+
+           pause
+           ;;
+            
+            
+            
+            
 
         8)
             echo

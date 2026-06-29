@@ -157,10 +157,27 @@ do
             ;;
 
         5)
+            clear
             echo
-            echo "Notes module coming soon."
+            echo "══════════════════════════════════════"
+            echo "         📝 RONIN NOTES"
+            echo "══════════════════════════════════════"
+            echo
+            echo "🚀 Opening Ronin Vault..."
+
+            if [ -f "$HOME/Applications/Obsidian.AppImage" ]; then
+            "$HOME/Applications/Obsidian.AppImage" --no-sandbox "$HOME/Documents/Ronin" >/dev/null 2>&1 &
+            echo "✅ Vault launched."
+            else
+            echo "❌ Obsidian AppImage not found."
+            fi
+
             pause
             ;;
+            
+            
+            
+    
 
         6)
             echo

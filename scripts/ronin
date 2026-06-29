@@ -1,4 +1,5 @@
 #!/bin/bash
+source "$(dirname "$0")/../modules/weather.sh"
 # Tokyo Night Colors
 
 RESET="\e[0m"

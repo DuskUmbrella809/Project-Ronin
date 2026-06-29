@@ -90,6 +90,7 @@ echo "╠═══════════════════════�
     printf "║ 💾 Disk        %-48s║\n" "$DISK"
     printf "║ 🐳 Containers  %-48s║\n" "$DOCKER_COUNT"
     printf "║ 🤖 Ollama      %-48s║\n" "$OLLAMA"
+    printf "║ 🌿 Git Status  %-48s║\n" "$GIT_STATUS"
     printf "║ 📡 Local IP    %-48s║\n" "$LOCAL_IP"
     printf "║ ⏱ Uptime      %-48s║\n" "$UPTIME"
     printf "║ 📁 Directory   %-48s║\n" "$CURRENT_DIR"

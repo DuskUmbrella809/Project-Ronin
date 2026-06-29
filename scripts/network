@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# ==========================================
+# Project Ronin
+# Network v1.0
+# ==========================================
+
+clear
+
+echo "=============================================="
+echo "         🌐 RONIN NETWORK v1.0"
+echo "=============================================="
+echo
+
+HOSTNAME=$(hostname)
+CURRENT_USER=$(whoami)
+LOCAL_IP=$(hostname -I | awk '{print $1}')
+GATEWAY=$(ip route | awk '/default/ {print $3}')
+INTERFACE=$(ip route | awk '/default/ {print $5}')
+PUBLIC_IP=$(curl -s ifconfig.me)
+
+echo "🖥 Hostname      : $HOSTNAME"
+echo "👤 User          : $CURRENT_USER"
+echo
+echo "📡 Local IP      : $LOCAL_IP"
+echo "🌍 Public IP     : $PUBLIC_IP"
+echo "🚪 Gateway       : $GATEWAY"
+echo "📶 Interface     : $INTERFACE"
+echo
+
+echo "🌐 Internet      :"
+
+if ping -c 1 1.1.1.1 >/dev/null 2>&1
+then
+    echo "                  ✅ Connected"
+else
+    echo "                  ❌ Offline"
+fi
+
+echo
+echo "🌐 DNS Servers"
+
+grep nameserver /etc/resolv.conf | while read line
+do
+    echo "                  $(echo $line | awk '{print $2}')"
+done
+
+echo
+
+echo "📶 Wi-Fi"
+
+SSID=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
+
+if [ -n "$SSID" ]
+then
+    echo "                  Connected to: $SSID"
+else
+    echo "                  Not Connected"
+fi
+
+echo
+
+echo "🔌 Docker"
+
+if systemctl is-active --quiet docker
+then
+    echo "                  ✅ Running"
+else
+    echo "                  ❌ Stopped"
+fi
+
+echo
+
+echo "=============================================="
+echo "           Network Check Complete"
+echo "=============================================="

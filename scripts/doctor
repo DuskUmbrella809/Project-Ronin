@@ -1,0 +1,68 @@
+#!/bin/bash
+
+clear
+
+echo "=============================================="
+echo "          🩺 RONIN DOCTOR v1.0"
+echo "=============================================="
+echo
+
+# Internet
+if ping -c 1 1.1.1.1 >/dev/null 2>&1; then
+    echo "🌐 Internet      : ✅ Connected"
+else
+    echo "🌐 Internet      : ❌ Offline"
+fi
+
+# Docker
+if systemctl is-active --quiet docker; then
+    echo "🐳 Docker        : ✅ Running"
+else
+    echo "🐳 Docker        : ❌ Stopped"
+fi
+
+# Ollama
+if systemctl is-active --quiet ollama; then
+    echo "🤖 Ollama        : ✅ Running"
+else
+    echo "🤖 Ollama        : ❌ Stopped"
+fi
+
+# Open WebUI
+if docker ps --format '{{.Names}}' | grep -q "^open-webui$"; then
+    echo "🧠 Open WebUI    : ✅ Running"
+else
+    echo "🧠 Open WebUI    : ❌ Stopped"
+fi
+
+# Battery
+BATTERY=$(cat /sys/class/power_supply/BAT*/capacity 2>/dev/null)
+
+if [ -n "$BATTERY" ]; then
+    echo "🔋 Battery       : ${BATTERY}%"
+fi
+
+# Memory
+MEMORY=$(free -h | awk '/Mem:/ {print $3 " / " $2}')
+
+echo "🧠 Memory        : $MEMORY"
+
+# Disk
+DISK=$(df -h / | awk 'NR==2 {print $5}')
+
+echo "💾 Disk Usage    : $DISK"
+
+# CPU Load
+CPU=$(uptime | awk -F'load average:' '{print $2}')
+
+echo "⚙️  CPU Load      :$CPU"
+
+# IP Address
+IP=$(hostname -I | awk '{print $1}')
+
+echo "📡 Local IP      : $IP"
+
+echo
+echo "=============================================="
+echo "            System Check Complete"
+echo "=============================================="

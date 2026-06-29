@@ -1,0 +1,179 @@
+#!/bin/bash
+# Tokyo Night Colors
+
+RESET="\e[0m"
+
+BLUE="\e[38;5;110m"
+PURPLE="\e[38;5;141m"
+GREEN="\e[38;5;114m"
+RED="\e[38;5;203m"
+YELLOW="\e[38;5;180m"
+CYAN="\e[38;5;117m"
+GRAY="\e[38;5;245m"
+WHITE="\e[97m"
+get_system_info() {
+
+    USER_NAME=$(whoami)
+    HOST_NAME=$(hostname)
+
+    VERSION=$(cat ~/Projects/Project-Ronin/VERSION)
+
+    OS_NAME=$(grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '"')
+
+    BATTERY=$(cat /sys/class/power_supply/BAT*/capacity 2>/dev/null)
+
+    MEMORY=$(free -h | awk '/Mem:/ {print $3 " / " $2}')
+
+    CURRENT_DIR=$(pwd)
+
+    DISK=$(df -h / | awk 'NR==2 {print $5}')
+
+    TIME=$(date +"%I:%M %p")
+
+    UPTIME=$(uptime -p | sed 's/up //')
+
+    LOCAL_IP=$(hostname -I | awk '{print $1}')
+
+    DOCKER_COUNT=$(docker ps -q 2>/dev/null | wc -l)
+
+    if ping -c1 1.1.1.1 >/dev/null 2>&1
+    then
+        INTERNET="🟢 Online"
+    else
+        INTERNET="🔴 Offline"
+    fi
+
+    if systemctl is-active --quiet ollama
+    then
+        OLLAMA="🟢 Running"
+    else
+        OLLAMA="🔴 Stopped"
+    fi
+
+}
+show_header() {
+
+    get_system_info
+
+    clear
+
+echo "╔════════════════════════════════════════════════════════════════════╗"
+echo -e "║${PURPLE}                      PROJECT RONIN${RESET}                                 ║"
+echo -e "║${GRAY}                          v${VERSION}${RESET}                                    ║"
+echo "╠════════════════════════════════════════════════════════════════════╣"
+
+    printf "║ 👤 User        %-48s║\n" "$USER_NAME"
+    printf "║ 💻 Host        %-48s║\n" "$HOST_NAME"
+    printf "║ 🕒 Time        %-48s║\n" "$TIME"
+    printf "║ 🐧 OS          %-48s║\n" "$OS_NAME"
+    printf "║ 🔋 Battery     %-48s║\n" "${BATTERY}%"
+    printf "║ 🌐 Internet    %-48s║\n" "$INTERNET"   
+    printf "║ 🧠 Memory      %-48s║\n" "$MEMORY"
+    printf "║ 💾 Disk        %-48s║\n" "$DISK"
+    printf "║ 🐳 Containers  %-48s║\n" "$DOCKER_COUNT"
+    printf "║ 🤖 Ollama      %-48s║\n" "$OLLAMA"
+    printf "║ 📡 Local IP    %-48s║\n" "$LOCAL_IP"
+    printf "║ ⏱ Uptime      %-48s║\n" "$UPTIME"
+    printf "║ 📁 Directory   %-48s║\n" "$CURRENT_DIR"
+
+    echo "╚════════════════════════════════════════════════════════════════════╝"
+    echo
+
+}
+
+show_menu() {
+
+    echo "╭──────────────────────── QUICK ACTIONS ───────────────────────╮"
+    echo "│                                                              │"
+    echo "│   [1] 🩺 Doctor              [5] 📝 Notes                    │"
+    echo "│   [2] 🌐 Network             [6] ☁️  Weather                  │"
+    echo "│   [3] 🤖 AI                  [7] 📚 Learn                    │"
+    echo "│   [4] 🐳 Docker              [8] ⚙️  Settings                 │"
+    echo "│                                                              │"
+    echo "│                        [Q] Quit                              │"
+    echo "╰──────────────────────────────────────────────────────────────╯"
+    echo
+}
+
+pause() {
+    echo
+    read -p "Press Enter to continue..."
+}
+
+while true
+do
+
+    show_header
+    show_menu
+
+    read -rsn1 choice
+
+    case $choice in
+
+        1)
+            doctor
+            pause
+            ;;
+
+        2)
+            network
+            pause
+            ;;
+
+        3)
+            echo
+            echo "AI module coming soon."
+            pause
+            ;;
+
+        4)
+            echo
+            echo "Docker module coming soon."
+            pause
+            ;;
+
+        5)
+            echo
+            echo "Notes module coming soon."
+            pause
+            ;;
+
+        6)
+            echo
+            echo "Weather module coming soon."
+            pause
+            ;;
+
+        7)
+            echo
+            echo "Cheat Sheet module coming soon."
+            pause
+            ;;
+
+        8)
+            echo
+            echo "Update module coming soon."
+            pause
+            ;;
+
+        9)
+            echo
+            echo "Backup module coming soon."
+            pause
+            ;;
+
+        q|Q)
+            clear
+            echo "Goodbye, Alex."
+            exit 0
+            ;;
+
+        *)
+            echo
+            echo "Invalid option."
+            pause
+            ;;
+
+    esac
+
+done

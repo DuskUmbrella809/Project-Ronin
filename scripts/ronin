@@ -11,6 +11,8 @@ YELLOW="\e[38;5;180m"
 CYAN="\e[38;5;117m"
 GRAY="\e[38;5;245m"
 WHITE="\e[97m"
+
+
 get_system_info() {
 
     USER_NAME=$(whoami)
@@ -48,6 +50,22 @@ get_system_info() {
         OLLAMA="🟢 Running"
     else
         OLLAMA="🔴 Stopped"
+    fi
+get_git_status
+}
+get_git_status() {
+
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+
+        if [[ -z $(git status --porcelain) ]]; then
+            GIT_STATUS="✅ Clean"
+        else
+            CHANGES=$(git status --porcelain | wc -l)
+            GIT_STATUS="⚠️ ${CHANGES} Changes"
+        fi
+
+    else
+        GIT_STATUS="N/A"
     fi
 
 }

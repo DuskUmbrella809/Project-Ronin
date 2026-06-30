@@ -286,10 +286,83 @@ do
             
 
         8)
-            echo
-            echo "Update module coming soon."
-            pause
-            ;;
+    clear
+
+    while true; do
+        clear
+
+        echo "══════════════════════════════════════"
+        echo "          ⚙️ RONIN SETTINGS"
+        echo "══════════════════════════════════════"
+        echo
+        echo "1) Edit Ronin"
+        echo "2) Edit ~/.zshrc"
+        echo "3) Edit Fastfetch Config"
+        echo "4) Open Project Folder"
+        echo "5) Reload Shell"
+        echo "6) About Ronin"
+        echo
+        echo "B) Back"
+        echo
+
+        read -rp "Select an option: " SETTINGS
+
+        case "$SETTINGS" in
+
+            1)
+                code ~/Projects/Project-Ronin/scripts/ronin
+                ;;
+            2)
+                code ~/.zshrc
+                ;;
+            3)
+                code ~/.config/fastfetch/config.jsonc
+                ;;
+            4)
+                code ~/Projects/Project-Ronin
+                ;;
+            5)
+                echo
+                echo "✅ Restart your terminal to reload your shell."
+                read -rp "Press Enter to continue..."
+                ;;
+            6)
+                clear
+                echo "══════════════════════════════════════"
+                echo "          🥋 PROJECT RONIN"
+                echo "══════════════════════════════════════"
+                echo
+                echo "Version : $VERSION"
+                echo "Author  : Alex Gonzalez"
+                echo
+                echo "Built With:"
+                echo " • Bash"
+                echo " • Git"
+                echo " • Docker"
+                echo " • Ubuntu"
+                echo
+                echo "GitHub:"
+                echo "https://github.com/DuskUmbrella809/Project-Ronin"
+                echo
+                echo "Mission:"
+                echo "Learn"
+                echo "Build"
+                echo "Ship"
+                echo "Repeat"
+                echo "© 2026 Alex Gonzalez"
+                echo "══════════════════════════════════════"
+                read -rp "Press Enter to continue..."
+                ;;
+            b|B)
+                break
+                ;;
+            *)
+                echo "Invalid option."
+                sleep 1
+                ;;
+        esac
+    done
+    ;;
 
         9)
             echo
